@@ -1,0 +1,97 @@
+-- Made By IntelligentScripter#8313
+print("Made By IntelligentScripter#8313")
+_G.autotap = false
+_G.autorebirth = false
+_G.buyEgg = false
+
+
+
+local library = loadstring(game:HttpGet(('https://raw.githubusercontent.com/AikaV3rm/UiLib/master/Lib.lua')))()
+
+local w = library:CreateWindow("Clicker Madness") -- Creates the window
+
+local b = w:CreateFolder("Farming") -- Creates the folder(U will put here your buttons,etc)
+
+local c = w:CreateFolder("Teleport")
+
+local d = w:CreateFolder("Pet")
+
+local e = w:CreateFolder("Settings")
+
+c:Button("Space",function()
+    teleport(game.Workspace.Worlds.Space.Teleport.CFrame)
+end)
+
+b:Toggle("Auto Tap",function(bool)
+    _G.autotap = bool
+    print("AutoTap Toggled")
+    if bool == true then
+        doTap()
+    end
+end)
+
+b:Toggle("Auto Rebirth",function(bool)
+    _G.autorebirth = bool
+    print("AutoRebirth Toggled")
+    if bool == true then
+        doRebirth()
+    end
+end)
+
+e:DestroyGui()
+
+e:Label("Made By IntelligentScripter#8313",{
+    TextSize = 25;
+    TextColor = Color3.fromRGB(255,255,255);
+    BgColor = Color3.fromRGB(69,69,69);
+})
+
+
+
+
+
+function doTap()
+    spawn(function()
+        while _G.autotap == true do
+    
+            local args = {
+                [1] = 1
+            }
+        
+            game:GetService("ReplicatedStorage").Aero.AeroRemoteServices.ClickService.Click:FireServer(unpack(args))
+            wait()
+        end
+    end)
+end
+
+function doRebirth()
+    spawn(function()
+        while _G.autorebirth == true do
+    
+            local args = {
+                [1] = 100000
+            }
+            
+            game:GetService("ReplicatedStorage").Aero.AeroRemoteServices.RebirthService.BuyRebirths:FireServer(unpack(args))
+            wait()
+        end
+    end)
+end
+
+function playerPOS()
+    local player = game.Players.LocalPlayer
+    if player.Character then
+        return player.Character.HumanoidRootPart.Position
+    end
+        return false
+end
+
+function teleport(placeCFrame)
+    local player = game.Players.LocalPlayer
+    if player.Character then
+        player.Character.HumanoidRootPart.CFrame = placeCFrame
+    end
+end
+
+
+print("Successfully Loaded")
